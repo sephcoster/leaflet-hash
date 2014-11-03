@@ -15,7 +15,7 @@
 
 	L.Hash.parseHash = function(hash) {
 		if(hash.indexOf('#&pos=') === 0) {
-			hash = hash.substr(1);
+			hash = hash.substr(6);
 		}
 		var args = hash.split("/");
 		if (args.length == 3) {
