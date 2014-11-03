@@ -14,7 +14,7 @@
 	};
 
 	L.Hash.parseHash = function(hash) {
-		if(hash.indexOf('#') === 0) {
+		if(hash.indexOf('#&pos=') === 0) {
 			hash = hash.substr(1);
 		}
 		var args = hash.split("/");
@@ -40,7 +40,7 @@
 		    zoom = map.getZoom(),
 		    precision = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2));
 
-		return "#" + [zoom,
+		return "#&pos=" + [zoom,
 			center.lat.toFixed(precision),
 			center.lng.toFixed(precision)
 		].join("/");
