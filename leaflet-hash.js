@@ -41,7 +41,7 @@
 		addParam('zoom', zoom);
 		addParam('lat', center.lat.toFixed(precision));
 		addParam('lon', center.lng.toFixed(precision));
-		updateUrlHash();
+		return params;
 	},
 
 	L.Hash.prototype = {
@@ -106,6 +106,7 @@
 			} else {
 				this.onMapMove(this.map);
 			}
+			updateUrlHash();
 		},
 
 		// defer hash change updates every 100ms
@@ -121,6 +122,7 @@
 					that.changeTimeout = null;
 				}, this.changeDefer);
 			}
+
 		},
 
 		isListening: false,
