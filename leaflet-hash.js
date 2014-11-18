@@ -16,7 +16,6 @@
 	// Change this to parse the different options as an object.
 	L.Hash.parseHash = function(hash) {
 		var params = getHashParams();	
-		console.log( 'params zoom: ', params.zoom);	
 		if( typeof params.zoom != 'undefined' || typeof params.lat != 'undefined' || typeof params.lon != 'undefined') {
 			var zoom = parseInt(params.zoom.values, 10),
 			lat = parseFloat(params.lat.values),
@@ -81,7 +80,6 @@
 		onMapMove: function() {
 			// bail if we're moving the map (updating from a hash),
 			// or if the map is not yet loaded
-			console.log('onMapMove run');
 			var hash;
 
 			if (this.movingMap || !this.map._loaded) {
@@ -122,7 +120,6 @@
 
 				this.movingMap = false;
 			} else {
-				console.log('Update else calling onMapMove');
 				this.onMapMove(this.map);
 			}
 		},
@@ -145,7 +142,6 @@
 		isListening: false,
 		hashChangeInterval: null,
 		startListening: function() {
-			console.log('startListening calling onMapMove');
 			this.map.on("moveend", this.onMapMove, this);
 
 			if (HAS_HASHCHANGE) {
@@ -158,7 +154,6 @@
 		},
 
 		stopListening: function() {
-			console.log('stopListening calling onMapMove');
 			this.map.off("moveend", this.onMapMove, this);
 
 			if (HAS_HASHCHANGE) {
@@ -205,13 +200,10 @@ function updateUrlHash(params) {
     hashParams = [];
     // Loop through params, stringify them and push them into the temp array.
     function buildHashParam( param, name ) {
-        console.log('name: ', name);
-        console.log("param: ", param);
 
       hashParams.push( name + '=' + param.values );
 
     }
-    console.log('params inside updateUrlHash: ', params);
     _.forEach( params, buildHashParam );
     //console.log('Hash Params: ', hashParams);
     newHash = '&' + hashParams.join('&');
