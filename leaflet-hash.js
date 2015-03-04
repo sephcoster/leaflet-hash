@@ -15,7 +15,6 @@
 
     // Change this to parse the different options as an object.
     L.Hash.parseHash = function(hash) {
-        console.log("PARSING HASH");
         var params = getHashParams();   
         if( typeof params.zoom != 'undefined' || typeof params.lat != 'undefined' || typeof params.lon != 'undefined') {
             var zoom = parseInt(params.zoom.values, 10),
@@ -36,7 +35,6 @@
     };
 
     L.Hash.formatHash = function(map) {
-        console.log("FORMATTING HASH");
         var center = map.getCenter(),
             zoom = map.getZoom(),
             precision = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2)),
@@ -45,8 +43,6 @@
                 'lat': { values: center.lat.toFixed(precision), comparator: '=' },
                 'lon': { values: center.lng.toFixed(precision), comparator: '=' }
             };
-            console.log("RETURN OBJ: ", returnObj);
-            console.log("LAT, LON: ", returnObj.lat, " - ", returnObj.lon);
             return returnObj;   
     };
 
@@ -58,7 +54,6 @@
         formatHash: L.Hash.formatHash,
 
         init: function(map) {
-            console.log("INIT");
             this.map = map;
 
             // reset the hash
@@ -71,7 +66,6 @@
         },
 
         removeFrom: function(map) {
-            console.log("REMOVE FROM");
             if (this.changeTimeout) {
                 clearTimeout(this.changeTimeout);
             }
@@ -84,7 +78,6 @@
         },
 
         onMapMove: function() {
-            console.log("ON MAP MOVE");
             // bail if we're moving the map (updating from a hash),
             // or if the map is not yet loaded
             var hash;
@@ -115,22 +108,18 @@
 
         movingMap: false,
         update: function() {
-            console.log("UPDATE RUN");
             // var hash = getHashParams();
             if ( _.isEqual( hash, this.lastHash) ){
                 return false;
             }
-            console.log("Hash: ", hash);
             var parsed = this.parseHash(hash);
             if (parsed) {
-                console.log("IF PARSED SET VIEW");
                 this.movingMap = true;
 
                 this.map.setView(parsed.center, parsed.zoom);
 
                 this.movingMap = false;
             } else {
-                console.log("ON MAP MOVE THIS.MAP");
                 this.onMapMove(this.map);
             }
         },
@@ -153,7 +142,6 @@
         isListening: false,
         hashChangeInterval: null,
         startListening: function() {
-            console.log("START LISTENING");
             this.map.on("moveend", this.onMapMove, this);
 
             if (HAS_HASHCHANGE) {
@@ -174,7 +162,6 @@
                 clearInterval(this.hashChangeInterval);
             }
             this.isListening = false;
-            console.log("STOP LISTENING");
         }
     };
 
@@ -218,7 +205,6 @@ function updateUrlHash(params) {
 
     }
     _.forEach( params, buildHashParam );
-    //console.log('Hash Params: ', hashParams);
     newHash = '&' + hashParams.join('&');
     window.location.hash = newHash;
 
