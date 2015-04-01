@@ -15,7 +15,7 @@
 
     // Change this to parse the different options as an object.
     L.Hash.parseHash = function(hash) {
-        var params = getHashParams();   
+        var params = getHashParams();
         if( typeof params.zoom != 'undefined' || typeof params.lat != 'undefined' || typeof params.lon != 'undefined') {
             var zoom = parseInt(params.zoom.values, 10),
             lat = parseFloat(params.lat.values),
@@ -126,7 +126,7 @@
 
         // defer hash change updates every 200ms
         changeDefer: 200,
-        changeTimeout: 700,
+        changeTimeout: null,
         onHashChange: function() {
             // throttle calls to update() so that they only happen every
             // `changeDefer` ms
